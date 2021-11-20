@@ -3,21 +3,10 @@ import sys
 
 users_data = {}
 
-class Message:
-    def __init__ (self, text, datetime, user):
-        self.text = text
-        self.time = datetime
-        self.user = user
-
-    def send(self):
-        pass
-
-
 class User():
     def __init__(self):
         self.is_log_in = False
         self.is_register()
-        self.log_in()
 
     def wrapper(self):
         os.system('CLS')
@@ -65,6 +54,40 @@ class User():
         print (f'Привет, {self.login}!')
         users_data[self.login] = [self.password,]
 
+
+class Friend():
+    friends_list = {}
+
+    def __init__(self):
+        pass
+
+    def add_friend(self):
+        print ('Введите логин пользователя, которого хотите добавить в друзья:')
+        temp_friend = input()
+        if temp_friend not in users_data:
+            return 'Пользователь с таким логином не найден.'
+        else:
+            print (f'Как вы хотите записать пользователя {temp_friend} ?')
+            friend_name = input()
+            self.friends_list[friend_name] = temp_friend.User()
+            return f'{friend_name} ({temp_friend}) добавлен в Ваш список друзей.'
+
+    def delete_from_friends(self):
+        print ('Введите имя пользователя, которого хотите удалить из списка друзей:')
+        temp_del_friend = input()
+        if temp_del_friend not in self.friends_list.keys():
+            return f'Пользователя с именем "{temp_del_friend} нет в списке ваших друзей."'
+        else:
+            confirm = input(f'Вы уверены, что хотите удалить пользователя "{temp_del_friend}" c логином "{self.friends_list[temp_del_friend]}" из списка друзей?')
+            if confirm.lower() == 'да':
+                return f'Пользователь {self.friends_list.pop(temp_del_friend)} был удален из списка друзей.'
+
+class Message:
+    def __init__ (self):
+        pass
+
+    def send_message(self):
+        pass
 
 if __name__ == '__main__':
     user_test = User()
