@@ -1,6 +1,6 @@
 import os
 import sys
-from data.datausersmanager import USERS_DATA
+from data.users_data.datausersmanager import USERS_DATA
 
 
 class User():

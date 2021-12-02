@@ -1,4 +1,4 @@
-from data.datausersmanager import DataUsersManager
+from data.users_data.datausersmanager import DataUsersManager
 
 users_data = DataUsersManager()
 
