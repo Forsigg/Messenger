@@ -1,5 +1,6 @@
 import sqlite3
 from data.abstract_datamanager import AbstractDataManager
+from data.datafriendmanager import DataFriendsManager
 
 
 class DataUsersManager(AbstractDataManager):
@@ -10,7 +11,13 @@ class DataUsersManager(AbstractDataManager):
 
     def add_one(self, user_login, user_password):
         self._cursor.execute(f"INSERT INTO users VALUES ('{user_login}', '{user_password}')")
+
+        friend_manager = DataFriendsManager()
+        friend_manager.add_one(user_login)
+
         self._connect.commit()
+
+
 
     def delete_one(self, user_login):
         self._cursor.execute(f"DELETE FROM users WHERE user_login='{user_login}'")
