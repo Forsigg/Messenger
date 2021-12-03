@@ -48,6 +48,8 @@ class MessageData(AbstractDataManager):
             message = Message(message[0], self.user, message[1])
             print (message)
 
+        self._connection.close()
+
 if __name__ == '__main__':
     db = MessageData('клаус')
     # message = Message('hello!', 'клаус', 'jerry')

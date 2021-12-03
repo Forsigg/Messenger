@@ -1,17 +1,18 @@
-from data.users_data.abstract_datamanager import AbstractDataManager
+from data.users_data import AbstractDataManager
 import sqlite3
 from pathlib import Path
 
-import datausersmanager
+#import datausersmanager
 
 
 class DataFriendsManager(AbstractDataManager):
     def __init__(self, user_login):
         self.user = user_login.lower()
+        self.add_user(self.user)
 
     def connect(self):
         # функция для установления соединения с БД
-        self._connect = sqlite3.connect(Path('users_data.db'))
+        self._connect = sqlite3.connect(Path('data', 'users_data', 'users_data.db'))
         self._cursor = self._connect.cursor()
         self._cursor.execute("CREATE TABLE IF NOT EXISTS friends (user_login TEXT, user_friends BLOB)")
 

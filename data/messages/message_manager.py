@@ -10,8 +10,12 @@ class MessageManager(object):
         postman = MessageData(self.user_in)
         postman.add_one(message)
 
+    def get_message(self, message: Message):
         postman = MessageData(self.user_out)
         postman.add_one(message)
+
+    def show_all(self, user_out):
+        postman
 
 
 if __name__ == '__main__':
