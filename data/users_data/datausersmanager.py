@@ -13,22 +13,23 @@ class DataUsersManager(AbstractDataManager):
     def add_one(self, user_login, user_password):
         self.connect()
         self._cursor.execute(f"INSERT INTO users VALUES ('{user_login}', '{user_password}')")
-
-        friend_manager = DataFriendsManager(user_login)
-        friend_manager.add_one(user_login)
-
         self._connect.commit()
         self._connect.close()
+
+        friend_manager = DataFriendsManager()
+        friend_manager.add_user(user_login)
+
+
 
     def delete_one(self, user_login):
         self.connect()
         self._cursor.execute(f"DELETE FROM users WHERE user_login='{user_login}';")
-
-        friend_manager = DataFriendsManager(user_login)
-        friend_manager.delete_one(user_login)
-
         self._connect.commit()
         self._connect.close()
+
+        friend_manager = DataFriendsManager()
+        friend_manager.delete_user(user_login)
+
 
     def get_all(self, *args):
         self.connect()
