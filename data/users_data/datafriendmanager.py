@@ -6,10 +6,6 @@ from pathlib import Path
 
 
 class DataFriendsManager(AbstractDataManager):
-    def __init__(self, user_login):
-        self.user = user_login.lower()
-        self.add_user(self.user)
-
     def connect(self):
         # функция для установления соединения с БД
         self._connect = sqlite3.connect(Path('data', 'users_data', 'users_data.db'))
@@ -23,10 +19,16 @@ class DataFriendsManager(AbstractDataManager):
         self._connect.commit()
         self._connect.close()
 
-    def add_one(self, friend_login):
+    def delete_user(self, user_login):
+        self.connect()
+        self._cursor.execute(f"DELETE FROM friends WHERE user_login='{user_login}'")
+        self._connect.commit()
+        self._connect.close()
+
+    def add_one(self, user_login, friend_login):
         # добавление друга в список друзей
         self.connect()
-        friends = list(self._cursor.execute(f"SELECT * FROM friends WHERE user_login='{self.user}'"))[0][1]
+        friends = list(self._cursor.execute(f"SELECT * FROM friends WHERE user_login='{user_login}'"))[0][1]
 
         if friends == [None]:
             friends = friend_login + ','
@@ -37,15 +39,15 @@ class DataFriendsManager(AbstractDataManager):
             friends.append(str(friend_login + ','))
             friends = ''.join(friends)
 
-        self._cursor.execute(f"UPDATE friends SET user_friends='{friends}' WHERE user_login='{self.user}'")
+        self._cursor.execute(f"UPDATE friends SET user_friends='{friends}' WHERE user_login='{user_login}'")
         self._connect.commit()
         print(f'Пользователь {friend_login} успешно добавлен в список друзей.')
         self._connect.close()
 
-    def delete_one(self, friend_login):
+    def delete_one(self, user_login, friend_login):
         # удаление из списка друзей
         self.connect()
-        friends = list(self._cursor.execute(f"SELECT * FROM friends WHERE user_login='{self.user}'"))[0][1]
+        friends = list(self._cursor.execute(f"SELECT * FROM friends WHERE user_login='{user_login}'"))[0][1]
 
         if friends == [None]:
             self._connect.close()
@@ -56,34 +58,31 @@ class DataFriendsManager(AbstractDataManager):
         else:
             friends = friends.replace(friend_login + ',', '')
 
-        self._cursor.execute(f"UPDATE friends SET user_friends='{friends}' WHERE user_login='{self.user}'")
+        self._cursor.execute(f"UPDATE friends SET user_friends='{friends}' WHERE user_login='{user_login}'")
         self._connect.commit()
         print (f'Пользователь {friend_login} успешно удален из списка друзей.')
         self._connect.close()
 
 
-    def get_one(self, friend_login):
+    def get_one(self, user_login, friend_login):
         # получение сведений о друге
         user_manager = datausersmanager.DataUsersManager()
-        return user_manager.get_one(friend_login)
+        return user_manager.get_one(user_login, friend_login)
 
 
-    def get_all(self, *args):
+    def get_all(self, user_login):
         # получение списка всех друзей
         self.connect()
 
-        friends = list(self._cursor.execute(f"SELECT * FROM friends WHERE user_login='{self.user}'"))[0][1]
-        friends = friends.split(',')
-        print ('Список ваших друзей:')
-        for friend in friends:
-            print (friend)
+        friends = list(self._cursor.execute(f"SELECT * FROM friends WHERE user_login='{user_login}'"))[0][1]
+        if friends != None:
+            friends = friends.split(',')
+            print ('Список ваших друзей:')
+            for friend in friends:
+                print (friend)
+        else:
+            print ('Ваш список друзей пуст')
 
         self._connect.close()
 
 
-
-if __name__ == '__main__':
-    manager = DataFriendsManager('клаус')
-    manager.add_one('dominick')
-    manager.add_one('шлёпа')
-    manager.get_one('клаус')

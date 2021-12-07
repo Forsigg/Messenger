@@ -12,12 +12,12 @@ class AbstractDataManager(object):
 
     @property
     @abstractmethod
-    def delete_one(self, data):
+    def delete_one(self, *args):
         raise NotImplemented
 
     @property
     @abstractmethod
-    def get_one(self, data):
+    def get_one(self, *args):
         raise NotImplemented
 
     @property
