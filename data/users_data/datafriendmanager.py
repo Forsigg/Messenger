@@ -68,7 +68,7 @@ class DataFriendsManager(AbstractDataManager):
         return user_manager.get_one(friend_login)
 
 
-    def get_all(self):
+    def get_all(self, *args):
         # получение списка всех друзей
         self.connect()
 

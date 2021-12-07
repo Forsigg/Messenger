@@ -22,5 +22,5 @@ class AbstractDataManager(object):
 
     @property
     @abstractmethod
-    def get_all(self):
+    def get_all(self, *args):
         raise NotImplemented

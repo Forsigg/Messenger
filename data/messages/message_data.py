@@ -41,16 +41,25 @@ class MessageData(AbstractDataManager):
         self._connection.close()
 
 
-    def get_all(self):
+    def get_all_mine(self, receiver):
         self.connect()
-        messages = list(self._cursor.execute(f"SELECT * FROM {self.user}_messages"))
+        messages = list(self._cursor.execute(f"SELECT * FROM {self.user}_messages WHERE receiver='{receiver}'"))
         for message in messages:
             message = Message(message[0], self.user, message[1])
-            print (message)
+            print (f'{message.author}: {message.text}')
+
+        self._connection.close()
+
+    def get_all_yours(self, friend):
+        self.connect()
+        messages = list(self._cursor.execute(f"SELECT * FROM {self.user}_messages WHERE author='{friend}'"))
+        for message in messages:
+            message = Message(message[0], message[1], message[2])
+            print (f'{message.author}: {message.text}')
 
         self._connection.close()
 
 if __name__ == '__main__':
-    db = MessageData('клаус')
-    # message = Message('hello!', 'клаус', 'jerry')
-    # db.add_one(message)
+    # db = MessageData('клаус')
+    # db.get_all_mine('dominick')
+    # db.get_all_yours('dominick')

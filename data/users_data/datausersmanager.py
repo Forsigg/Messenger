@@ -26,7 +26,7 @@ class DataUsersManager(AbstractDataManager):
         self._connect.commit()
         self._connect.close()
 
-    def get_all(self):
+    def get_all(self, *args):
         self.connect()
         users = [user for user in self._cursor.execute(f"SELECT * FROM users;")]
         for user in users: print (user[0])
