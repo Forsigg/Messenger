@@ -2,13 +2,11 @@ from data.users_data import AbstractDataManager
 import sqlite3
 from pathlib import Path
 
-#import datausersmanager
-
 
 class DataFriendsManager(AbstractDataManager):
     def connect(self):
         # функция для установления соединения с БД
-        self._connect = sqlite3.connect(Path('data', 'users_data', 'users_data.db'))
+        self._connect = sqlite3.connect(Path(__file__).parent.joinpath('users_data.db'))
         self._cursor = self._connect.cursor()
         self._cursor.execute("CREATE TABLE IF NOT EXISTS friends (user_login TEXT, user_friends BLOB)")
 
@@ -62,12 +60,6 @@ class DataFriendsManager(AbstractDataManager):
         self._connect.commit()
         print (f'Пользователь {friend_login} успешно удален из списка друзей.')
         self._connect.close()
-
-
-    def get_one(self, user_login, friend_login):
-        # получение сведений о друге
-        user_manager = datausersmanager.DataUsersManager()
-        return user_manager.get_one(user_login, friend_login)
 
 
     def get_all(self, user_login):

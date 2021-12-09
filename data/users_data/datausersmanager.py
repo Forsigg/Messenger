@@ -1,12 +1,12 @@
 import sqlite3
-from data.users_data.abstract_datamanager import AbstractDataManager
-from data.users_data.datafriendmanager import DataFriendsManager
+from data.users_data import AbstractDataManager
 from pathlib import Path
+import asyncio
 
 
 class DataUsersManager(AbstractDataManager):
     def connect(self):
-        self._connect = sqlite3.connect(Path('data', 'users_data', 'users_data.db'))
+        self._connect = sqlite3.connect(Path(__file__).parent.joinpath('users_data.db'))
         self._cursor = self._connect.cursor()
         self._cursor.execute("CREATE TABLE IF NOT EXISTS users (user_login, user_password)")
 
@@ -16,10 +16,6 @@ class DataUsersManager(AbstractDataManager):
         self._connect.commit()
         self._connect.close()
 
-        friend_manager = DataFriendsManager()
-        friend_manager.add_user(user_login)
-
-
 
     def delete_one(self, user_login):
         self.connect()
@@ -27,14 +23,11 @@ class DataUsersManager(AbstractDataManager):
         self._connect.commit()
         self._connect.close()
 
-        friend_manager = DataFriendsManager()
-        friend_manager.delete_user(user_login)
-
 
     def get_all(self, *args):
         self.connect()
         users = [user for user in self._cursor.execute(f"SELECT * FROM users;")]
-        for user in users: print (user[0])
+        for user in users: yield (user[0])
         self._connect.close()
 
 
@@ -71,7 +64,3 @@ class DataUsersManager(AbstractDataManager):
         else:
             self._connect.close()
             return True
-
-if __name__ == '__main__':
-    db = DataFriendsManager()
-    db.delete_user('jora')
