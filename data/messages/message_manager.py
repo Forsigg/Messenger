@@ -1,5 +1,5 @@
-from message import Message
-from message_data import MessageData
+from data.messages import Message
+from data.messages import MessageData
 
 class MessageManager(object):
     def __init__(self, user_in, user_out):
@@ -8,6 +8,8 @@ class MessageManager(object):
 
     def send_message(self, message: Message):
         postman = MessageData(self.user_in)
+        postman.add_one(message)
+        postman = MessageData(self.user_out)
         postman.add_one(message)
 
     def get_message(self, message: Message):
@@ -19,8 +21,8 @@ class MessageManager(object):
         mine = postman.get_all_mine(self.user_out)
         yours = postman.get_all_yours(self.user_out)
         all_messages = mine + yours
-        for message in all_messages:
-            print (f'{message[1]}: {message[0]}   - to {message[2]}')
+        return sorted(all_messages, key=lambda tup: tup[3])
 
 if __name__ == '__main__':
-    manager = MessageManager('клаус', 'dominick')
+    manager = MessageManager('клаус', 'jora')
+    print (manager.get_all())

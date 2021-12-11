@@ -1,4 +1,4 @@
-from message import Message
+from data.messages import Message
 from data.users_data.abstract_datamanager import AbstractDataManager
 import sqlite3
 from pathlib import Path
@@ -8,7 +8,7 @@ class MessageData(AbstractDataManager):
         self.user = user_login
 
     def connect(self):
-        self._connection = sqlite3.connect(Path('user_messages.db'))
+        self._connection = sqlite3.connect(Path(__file__).parent.joinpath('user_messages.db'))
         self._cursor = self._connection.cursor()
         self._cursor.execute(f"CREATE TABLE IF NOT EXISTS {self.user}_messages (text TEXT, author TEXT, receiver TEXT, date TEXT)")
 
@@ -53,7 +53,7 @@ class MessageData(AbstractDataManager):
         self._connection.close()
         return messages
 
-# if __name__ == '__main__':
-    # db = MessageData('клаус')
-    # db.get_all_mine('dominick')
-    # db.get_all_yours('dominick')
+if __name__ == '__main__':
+    db = MessageData('клаус')
+    print (db.get_all_mine('jora'))
+    print (db.get_all_yours('jora'))

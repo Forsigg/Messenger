@@ -1,7 +1,7 @@
 import sqlite3
 from data.users_data import AbstractDataManager
 from pathlib import Path
-import asyncio
+
 
 
 class DataUsersManager(AbstractDataManager):
@@ -27,8 +27,8 @@ class DataUsersManager(AbstractDataManager):
     def get_all(self, *args):
         self.connect()
         users = [user for user in self._cursor.execute(f"SELECT * FROM users;")]
-        for user in users: yield (user[0])
         self._connect.close()
+        return users
 
 
     def get_one(self, user_login):
@@ -36,7 +36,7 @@ class DataUsersManager(AbstractDataManager):
         user = list(self._cursor.execute(f"SELECT user_login FROM users WHERE user_login='{user_login}'"))
         if user == []:
             self._connect.close()
-            return print (f'Пользователя {user_login} не существует.')
+            return False
         else:
             self._connect.close()
             return print (user[0][0])
