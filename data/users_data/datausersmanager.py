@@ -39,7 +39,7 @@ class DataUsersManager(AbstractDataManager):
             return False
         else:
             self._connect.close()
-            return print (user[0][0])
+            return user
 
 
 

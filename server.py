@@ -12,37 +12,52 @@ import jinja2
 import json
 
 from data.users_data.datausersmanager import DataUsersManager
-from user_data import User
+from data.messages import MessageManager
 
 
 routes = web.RouteTableDef()
 
-
-# async def __to_list(iterable: AsyncIterable[Any]) -> Iterable[Any]:
-#     return [item async for item in iterable]
 
 @routes.get('/')
 async def root(_request: web.Request) -> web.Response:
     raise web.HTTPFound(location='/users')
 
 @routes.get('/users')
-@aiohttp_jinja2.template('users.jinja2')
-async def get_users(request: web.Request) -> web.json_response:
+async def get_users(_request: web.Request) -> web.json_response:
     db = DataUsersManager()
-    data = {'name': 'User manager',
-            'users': db.get_all()}
+    users = [user[0] for user in db.get_all()]
 
-    return web.json_response(json.dumps(data))
+    json_users = json.dumps(users)
 
-@routes.post('/users/{main_user}')
-async def auth(request: web.Request) -> web.Response:
-    storage = DataUsersManager()
+    return web.json_response(json_users)
 
-    data = dict(await request.post())
-    user = User(**data)
-    await storage.add_one(user)
+@routes.get('/users/{user}')
+async def auth(_request: web.Request) -> web.Response:
+    db = DataUsersManager()
 
-    return web.HTTPFound(location=f'/users')
+    if db.get_one(_request.match_info['user']):
+        return web.json_response(json.dumps(_request.match_info['user']))
+    else:
+        raise web.HTTPNotFound()
+
+
+@routes.get('/users/{user_in}/{user_out}')
+async def get_messages(_request: web.Request) -> web.json_response:
+    db = MessageManager(_request.match_info['user_in'], _request.match_info['user_out'])
+    messages = json.dumps(db.get_all())
+
+    return web.json_response(messages)
+
+@routes.post('/users/{user_in}/{user_out}/{text}')
+async def send_message(_request: web.Request) -> web.json_response:
+    db = MessageManager(_request.match_info['user_in'], _request.match_info['user_out'])
+
+    message = dict(await _request.post())
+    db.send_message(**message)
+
+    return web.HTTPFound(location=r'/users/{user_in}/{user_out}')
+
+
 
 if __name__ == '__main__':
     templates_directory =Path(__file__).parent.joinpath('server_templates')
