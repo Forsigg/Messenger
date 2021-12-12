@@ -1,0 +1,7 @@
+/.idea/
+/App on local server/.idea/
+/App on local server/venv/
+/App on local server/__pycache__/
+/Non server app/.idea/
+/Non server app/venv/
+/Non server app/__pycache__/

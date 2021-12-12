@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>register_window</class>
+ <widget class="QMainWindow" name="register_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>350</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label_register">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>20</y>
+      <width>180</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>Окно регистрации</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="login_lineedit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>300</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_insert_login">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>100</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Введите логин:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_insert_pass">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>100</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Введите пароль:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="passw_lineedit_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>300</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_confirm_pass">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>150</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Подтверждение пароля:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="confirm_pass_lineedit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>300</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="register_btn">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>220</y>
+      <width>120</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Зарегистрироваться</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

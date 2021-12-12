@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Messenger_window</class>
+ <widget class="QMainWindow" name="Messenger_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>456</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Messenger</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>581</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="userList_label">
+       <property name="text">
+        <string>Список пользователей:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="users_ListWidget">
+       <item>
+        <property name="text">
+         <string>User1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>User2</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="chat_label">
+       <property name="text">
+        <string>Окно диалога с пользователем:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListView" name="chat_view"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="textedit_line">
+       <property name="inputMask">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Введите текст сообщения...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="send_btn">
+       <property name="text">
+        <string>Отправить</string>
+       </property>
+       <property name="shortcut">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="User_menu">
+    <property name="title">
+     <string>Пользователь</string>
+    </property>
+    <addaction name="quit"/>
+    <addaction name="delete_acc"/>
+    <addaction name="exit"/>
+   </widget>
+   <widget class="QMenu" name="Friends_menu">
+    <property name="title">
+     <string>Друзья</string>
+    </property>
+    <addaction name="add_friend"/>
+    <addaction name="delete_friend"/>
+   </widget>
+   <addaction name="User_menu"/>
+   <addaction name="Friends_menu"/>
+  </widget>
+  <action name="quit">
+   <property name="text">
+    <string>Выйти из аккаунта</string>
+   </property>
+  </action>
+  <action name="exit">
+   <property name="text">
+    <string>Закрыть приложение</string>
+   </property>
+  </action>
+  <action name="add_friend">
+   <property name="text">
+    <string>Добавить пользователя в друзья</string>
+   </property>
+  </action>
+  <action name="delete_friend">
+   <property name="text">
+    <string>Удалить пользователя из друзей</string>
+   </property>
+  </action>
+  <action name="delete_acc">
+   <property name="text">
+    <string>Удалить аккаунт</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>auth_widget</class>
+ <widget class="QWidget" name="auth_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="login_edit">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>130</y>
+     <width>300</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="inputMask">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>30</number>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="enter_btn_2">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>280</y>
+     <width>85</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Регистрация</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="enter_btn">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>280</y>
+     <width>85</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Войти</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_auth_window">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>10</y>
+     <width>200</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Окно авторизации</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_password">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>190</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Введите пароль:</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::PlainText</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_login">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>100</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Введите логин:</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::PlainText</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="password_edit">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>220</y>
+     <width>300</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <property name="inputMask">
+    <string/>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
