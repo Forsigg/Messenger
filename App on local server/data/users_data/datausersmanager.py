@@ -33,7 +33,7 @@ class DataUsersManager(AbstractDataManager):
 
     def get_one(self, user_login):
         self.connect()
-        user = list(self._cursor.execute(f"SELECT user_login FROM users WHERE user_login='{user_login}'"))
+        user = list(self._cursor.execute(f"SELECT * FROM users WHERE user_login='{user_login}'"))
         if user == []:
             self._connect.close()
             return False

@@ -22,10 +22,10 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
 from gui.Ui_auth_false_dialog import run_dialog as dialog_auth_false
 from gui.Ui_pass_not_conf import run_dialog as dialog_pass_not_conf
 from gui.Ui_register_window import run_window as register_window
-from data.users_data import DataUsersManager
-
 from gui.Ui_messenger_window import Ui_Messenger_window, run_messenger
 
+import json
+import requests
 
 
 
@@ -95,15 +95,19 @@ class Ui_auth_widget(object):
 
     @Slot()
     def dialog_in_auth(self):
-        db = DataUsersManager()
-        if not db.user_in_base(self.login_edit.text()):
-            dialog_auth_false()
-        elif not db.is_right_password(self.login_edit.text(), self.password_edit.text()):
-            dialog_pass_not_conf()
+        users = json.loads(requests.get('http://localhost:8080/users').json())
+        if json.loads(requests.get(f'http://localhost:8080/users/{self.login_edit.text()}/auth').json()) != False:
+            user_pass = json.loads(requests.get(f'http://localhost:8080/users/{self.login_edit.text()}/auth').json())[0][1]
+            if user_pass != self.password_edit.text():
+                print(2)
+                dialog_pass_not_conf()
+            else:
+                request = requests.get(f'http://localhost:8080/users/{self.login_edit.text()}')
+                user = request.json()
+                run_messenger(user)
         else:
-            with open('session.txt', 'w') as f:
-                f.write(self.login_edit.text())
-            run_messenger()
+            dialog_auth_false()
+
 
     @Slot()
     def register_window(self):

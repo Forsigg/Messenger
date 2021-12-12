@@ -21,10 +21,18 @@ from data.messages import Message
 from data.messages import MessageManager
 from data.users_data import DataUsersManager
 
+import requests
+import json
+
 db = DataUsersManager()
 
 
 class Ui_Messenger_window(object):
+    def session(self,login_json):
+        login = json.loads(login_json)
+        self.session = login
+        self.users = json.loads(requests.get('http://localhost:8080/users').json())
+
     def setupUi(self, Messenger_window):
         if not Messenger_window.objectName():
             Messenger_window.setObjectName(u"Messenger_window")
@@ -44,7 +52,7 @@ class Ui_Messenger_window(object):
         self.verticalLayout.addWidget(self.userList_label)
 
         self.users_ListWidget = QListWidget(self.verticalLayoutWidget)
-        for _ in range(len(db.get_all())-2):
+        for _ in range(len(self.users)-1):
             QListWidgetItem(self.users_ListWidget)
         self.users_ListWidget.setObjectName(u"users_ListWidget")
 
@@ -72,11 +80,6 @@ class Ui_Messenger_window(object):
 
         Messenger_window.setCentralWidget(self.centralwidget)
 
-
-        with open('session.txt', 'r') as f:
-            login = f.read().strip()
-            self.session = login
-
         self.retranslateUi(Messenger_window)
 
         QMetaObject.connectSlotsByName(Messenger_window)
@@ -94,8 +97,9 @@ class Ui_Messenger_window(object):
         if user == self.session:
             pass
         else:
-            db_messages = MessageManager(self.session, user)
-            for index, message in enumerate(db_messages.get_all()):
+            request = requests.get(f'http://localhost:8080/users/{self.session}/{user}')
+            db_messages = json.loads(request.json())
+            for index, message in enumerate(db_messages):
                 QListWidgetItem(self.chat_view)
                 qlistwidgetitem = self.chat_view.item(index)
                 qlistwidgetitem.setText(QCoreApplication.translate("Messenger_window", f"{message[3][:19]}, {message[1]}: {message[0]}", None));
@@ -105,9 +109,14 @@ class Ui_Messenger_window(object):
         current_row = self.users_ListWidget.selectionModel().currentIndex().row()
         user_out = self.users_ListWidget.item(current_row).text()
         message = Message(self.textedit_line.text(), str(self.session), user_out, str(datetime.now()))
+        data = {
+            'text': message.text,
+            'author': message.author,
+            'receiver': message.receiver,
+            'date': message.date
+        }
         if message.text != '':
-            db_message = MessageManager(self.session, user_out)
-            db_message.send_message(message)
+            request = requests.post(f'http://localhost:8080/users/{self.session}/{user_out}/send', data=data)
             self.textedit_line.setText('')
             self.open_messages()
 
@@ -117,10 +126,10 @@ class Ui_Messenger_window(object):
 
         __sortingEnabled = self.users_ListWidget.isSortingEnabled()
         self.users_ListWidget.setSortingEnabled(False)
-        for index, user in enumerate(db.get_all()):
+        for index, user in enumerate(self.users):
             QListWidgetItem(self.users_ListWidget)
             qlistwidgetitem = self.users_ListWidget.item(index)
-            qlistwidgetitem.setText(QCoreApplication.translate("Messenger_window", "{}".format(user[0]), None));
+            qlistwidgetitem.setText(QCoreApplication.translate("Messenger_window", "{}".format(user), None));
         self.users_ListWidget.setSortingEnabled(__sortingEnabled)
 
         self.chat_label.setText(QCoreApplication.translate("Messenger_window", u"\u041e\u043a\u043d\u043e \u0434\u0438\u0430\u043b\u043e\u0433\u0430 \u0441 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u0435\u043c:", None))
@@ -134,10 +143,11 @@ class Ui_Messenger_window(object):
         # retranslateUi
 
 #
-def run_messenger():
+def run_messenger(login):
 
     window = QMainWindow()
     window_ui = Ui_Messenger_window()
+    window_ui.session(login)
     window_ui.setupUi(window)
 
     window.show()

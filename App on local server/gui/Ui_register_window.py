@@ -22,8 +22,9 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
 from gui.Ui_login_reserved_dialog import run_dialog as dialog_login_reserved
 from gui.Ui_pass_not_conf import run_dialog as dialog_not_conf
 
-from data.users_data import DataUsersManager
-from data.users_data import DataFriendsManager
+import json
+import requests
+
 
 class Ui_register_window(object):
     def setupUi(self, register_window):
@@ -85,19 +86,21 @@ class Ui_register_window(object):
 
     @Slot()
     def register(self):
-        db = DataUsersManager()
-        db_friends = DataFriendsManager()
+        users = json.loads(requests.get('http://localhost:8080/users').json())
         user_login = self.login_lineedit.text()
         user_pass = self.passw_lineedit_2.text()
         user_pass_conf = self.confirm_pass_lineedit.text()
-        if db.user_in_base(user_login):
+        if user_login in users:
             dialog_login_reserved()
         elif user_pass != user_pass_conf:
             dialog_not_conf()
         else:
-            db.add_one(user_login, user_pass)
-            db_friends.add_user(user_login)
-            # window.close()
+            data = {
+                'login': user_login,
+                'password': user_pass
+            }
+            requests.post('http://localhost:8080/users', data=data)
+            window.close()
 
 
 

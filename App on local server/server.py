@@ -13,9 +13,12 @@ import json
 
 from data.users_data.datausersmanager import DataUsersManager
 from data.messages import MessageManager
+from data.messages import Message
+from user_data import User
 
 
 routes = web.RouteTableDef()
+db = DataUsersManager()
 
 
 @routes.get('/')
@@ -24,7 +27,6 @@ async def root(_request: web.Request) -> web.Response:
 
 @routes.get('/users')
 async def get_users(_request: web.Request) -> web.json_response:
-    db = DataUsersManager()
     users = [user[0] for user in db.get_all()]
 
     json_users = json.dumps(users)
@@ -33,12 +35,18 @@ async def get_users(_request: web.Request) -> web.json_response:
 
 @routes.get('/users/{user}')
 async def auth(_request: web.Request) -> web.Response:
-    db = DataUsersManager()
-
     if db.get_one(_request.match_info['user']):
         return web.json_response(json.dumps(_request.match_info['user']))
     else:
         raise web.HTTPNotFound()
+
+
+@routes.get('/users/{user}/auth')
+async def is_right_password(_request: web.Request) -> web.Response:
+    data_json = json.dumps(db.get_one(_request.match_info['user']))
+
+    return web.json_response(data_json)
+
 
 
 @routes.get('/users/{user_in}/{user_out}')
@@ -48,14 +56,24 @@ async def get_messages(_request: web.Request) -> web.json_response:
 
     return web.json_response(messages)
 
-@routes.post('/users/{user_in}/{user_out}/{text}')
+@routes.post('/users/{user_in}/{user_out}/send')
 async def send_message(_request: web.Request) -> web.json_response:
-    db = MessageManager(_request.match_info['user_in'], _request.match_info['user_out'])
+    db_messages = MessageManager(_request.match_info['user_in'], _request.match_info['user_out'])
 
     message = dict(await _request.post())
-    db.send_message(**message)
+    data = Message(message['text'], message['author'], message['receiver'], message['date'])
+    db_messages.send_message(data)
 
-    return web.HTTPFound(location=r'/users/{user_in}/{user_out}')
+    raise web.HTTPFound(location=r'/users/{user_in}/{user_out}')
+
+@routes.post('/users')
+async def add_user(_request: web.Request) -> web.json_response:
+    user = dict(await _request.post())
+    data = User(user['login'], user['password'])
+    db.add_one(data.login, data.password)
+
+    raise web.HTTPFound(location='/users')
+
 
 
 
