@@ -12,7 +12,7 @@ from data.messages import MessageManager
 from data.messages import Message
 from user_data import User
 
-import config
+import server_config
 
 
 routes = web.RouteTableDef()
@@ -83,4 +83,4 @@ if __name__ == '__main__':
     aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(templates_directory)))
     app.add_routes(routes)
 
-    web.run_app(app, host=config.host, port=int(config.port))
+    web.run_app(app, host=server_config.host, port=int(server_config.port))

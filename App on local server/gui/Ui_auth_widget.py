@@ -27,7 +27,7 @@ from gui.Ui_messenger_window import Ui_Messenger_window, run_messenger
 import json
 import requests
 
-import config
+import client_config
 
 
 class Ui_auth_widget(object):
@@ -92,14 +92,14 @@ class Ui_auth_widget(object):
 
     @Slot()
     def dialog_in_auth(self):
-        users = json.loads(requests.get(f'http://{config.host}:{config.port}/users').json())
-        if json.loads(requests.get(f'http://{config.host}:{config.port}/users/{self.login_edit.text()}/auth').json()) != False:
-            user_pass = json.loads(requests.get(f'http://{config.host}:{config.port}/users/{self.login_edit.text()}/auth').json())[0][1]
+        users = json.loads(requests.get(f'http://{client_config.host}:{client_config.port}/users').json())
+        if json.loads(requests.get(f'http://{client_config.host}:{client_config.port}/users/{self.login_edit.text()}/auth').json()) != False:
+            user_pass = json.loads(requests.get(f'http://{client_config.host}:{client_config.port}/users/{self.login_edit.text()}/auth').json())[0][1]
             if user_pass != self.password_edit.text():
                 print(2)
                 dialog_pass_not_conf()
             else:
-                request = requests.get(f'http://{config.host}:{config.port}/users/{self.login_edit.text()}')
+                request = requests.get(f'http://{client_config.host}:{client_config.port}/users/{self.login_edit.text()}')
                 user = request.json()
                 run_messenger(user)
         else:

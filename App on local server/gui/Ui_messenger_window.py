@@ -22,7 +22,7 @@ from data.users_data import DataUsersManager
 
 import requests
 import json
-import config
+import client_config
 
 db = DataUsersManager()
 
@@ -31,7 +31,7 @@ class Ui_Messenger_window(object):
     def session(self,login_json):
         login = json.loads(login_json)
         self.session = login
-        self.users = json.loads(requests.get(f'http://{config.host}:{config.port}/users').json())
+        self.users = json.loads(requests.get(f'http://{client_config.host}:{client_config.port}/users').json())
 
     def setupUi(self, Messenger_window):
         if not Messenger_window.objectName():
@@ -97,7 +97,7 @@ class Ui_Messenger_window(object):
         if user == self.session:
             pass
         else:
-            request = requests.get(f'http://{config.host}:{config.port}/users/{self.session}/{user}')
+            request = requests.get(f'http://{client_config.host}:{client_config.port}/users/{self.session}/{user}')
             db_messages = json.loads(request.json())
             for index, message in enumerate(db_messages):
                 QListWidgetItem(self.chat_view)
@@ -116,7 +116,7 @@ class Ui_Messenger_window(object):
             'date': message.date
         }
         if message.text != '':
-            request = requests.post(f'http://{config.host}:{config.port}/users/{self.session}/{user_out}/send', data=data)
+            request = requests.post(f'http://{client_config.host}:{client_config.port}/users/{self.session}/{user_out}/send', data=data)
             self.textedit_line.setText('')
             self.open_messages()
 

@@ -24,7 +24,7 @@ from gui.Ui_pass_not_conf import run_dialog as dialog_not_conf
 
 import json
 import requests
-import config
+import server_config
 
 
 class Ui_register_window(object):
