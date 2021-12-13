@@ -44,9 +44,6 @@ class Ui_auth_widget(object):
         self.login_edit.setFont(font)
         self.login_edit.setMaxLength(30)
         self.login_edit.setClearButtonEnabled(False)
-        self.enter_btn_2 = QPushButton(auth_widget)
-        self.enter_btn_2.setObjectName(u"enter_btn_2")
-        self.enter_btn_2.setGeometry(QRect(260, 280, 85, 30))
         self.enter_btn = QPushButton(auth_widget)
         self.enter_btn.setObjectName(u"enter_btn")
         self.enter_btn.setGeometry(QRect(40, 280, 85, 30))
@@ -92,7 +89,6 @@ class Ui_auth_widget(object):
 
         # signals for buttons
         self.enter_btn.clicked.connect(self.dialog_in_auth)
-        self.enter_btn_2.clicked.connect(self.register_window)
 
     @Slot()
     def dialog_in_auth(self):
@@ -110,14 +106,9 @@ class Ui_auth_widget(object):
             dialog_auth_false()
 
 
-    @Slot()
-    def register_window(self):
-        register_window()
-
     def retranslateUi(self, auth_widget):
         auth_widget.setWindowTitle(QCoreApplication.translate("auth_widget", u"Messenger Auth", None))
         self.login_edit.setInputMask("")
-        self.enter_btn_2.setText(QCoreApplication.translate("auth_widget", u"\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f", None))
         self.enter_btn.setText(QCoreApplication.translate("auth_widget", u"\u0412\u043e\u0439\u0442\u0438", None))
         self.label_auth_window.setText(QCoreApplication.translate("auth_widget", u"\u041e\u043a\u043d\u043e \u0430\u0432\u0442\u043e\u0440\u0438\u0437\u0430\u0446\u0438\u0438", None))
         self.label_password.setText(QCoreApplication.translate("auth_widget", u"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043f\u0430\u0440\u043e\u043b\u044c:", None))
