@@ -1,10 +1,6 @@
-import uuid
-
 from pathlib import Path
-from typing import Any, AsyncIterable, Dict, Iterable
 
 from aiohttp import web
-from aiohttp_swagger import *
 
 import aiohttp_jinja2
 import jinja2
@@ -15,6 +11,8 @@ from data.users_data.datausersmanager import DataUsersManager
 from data.messages import MessageManager
 from data.messages import Message
 from user_data import User
+
+import config
 
 
 routes = web.RouteTableDef()
@@ -85,4 +83,4 @@ if __name__ == '__main__':
     aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(templates_directory)))
     app.add_routes(routes)
 
-    web.run_app(app, host='localhost', port=8080)
+    web.run_app(app, host=config.host, port=int(config.port))

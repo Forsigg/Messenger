@@ -24,6 +24,7 @@ from gui.Ui_pass_not_conf import run_dialog as dialog_not_conf
 
 import json
 import requests
+import config
 
 
 class Ui_register_window(object):
@@ -86,7 +87,7 @@ class Ui_register_window(object):
 
     @Slot()
     def register(self):
-        users = json.loads(requests.get('http://localhost:8080/users').json())
+        users = json.loads(requests.get(f'http://{config.host}:{config.port}/users').json())
         user_login = self.login_lineedit.text()
         user_pass = self.passw_lineedit_2.text()
         user_pass_conf = self.confirm_pass_lineedit.text()
@@ -99,7 +100,7 @@ class Ui_register_window(object):
                 'login': user_login,
                 'password': user_pass
             }
-            requests.post('http://localhost:8080/users', data=data)
+            requests.post(f'http://{config.host}:{config.port}/users', data=data)
             window.close()
 
 
